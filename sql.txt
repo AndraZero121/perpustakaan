@@ -1,0 +1,44 @@
+CREATE DATABASE perpustakaan;
+USE perpustakaan;
+
+-- Tabel Petugas
+CREATE TABLE petugas (
+    id_petugas INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nama_petugas VARCHAR(255) NOT NULL,
+    kontak VARCHAR(255) NOT NULL UNIQUE,
+    jabatan VARCHAR(255) NOT NULL
+);
+
+-- Tabel Anggota
+CREATE TABLE anggota (
+    id_anggota INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nama_anggota VARCHAR(255) NOT NULL,
+    alamat VARCHAR(255) NOT NULL,
+    tanggal_lahir DATE NOT NULL, -- Menggunakan DATE karena hanya tanggal
+    kontak VARCHAR(255) NOT NULL UNIQUE -- Bisa diberi UNIQUE jika kontak tidak boleh duplikat
+);
+
+-- Tabel Buku
+CREATE TABLE buku (
+    id_buku INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    judul_buku VARCHAR(255) NOT NULL,
+    pengarang VARCHAR(255) NOT NULL,
+    penerbit VARCHAR(255),
+    tahun_terbit YEAR NOT NULL, -- Menggunakan YEAR untuk tahun terbit
+    kategori VARCHAR(255),
+    jumlah_stok INT DEFAULT 0 NOT NULL, -- Stok harus diisi dan default 0
+    gambar VARCHAR(255)
+);
+
+CREATE TABLE peminjaman (
+    id_peminjaman INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_petugas INT NOT NULL, -- Menambahkan kolom id_petugas
+    id_buku INT NOT NULL, -- Menambahkan kolom id_buku
+    id_anggota INT NOT NULL, -- Menambahkan kolom id_anggota
+    tanggal_pinjam DATE NOT NULL, -- Menggunakan DATE jika hanya tanggal yang diperlukan
+    tanggal_kembali DATE, -- Menggunakan DATE jika hanya tanggal yang diperlukan
+    status_peminjaman ENUM('dipinjam', 'dikembalikan') NOT NULL DEFAULT 'dipinjam', -- Menambahkan status peminjaman
+    FOREIGN KEY (id_petugas) REFERENCES petugas(id_petugas),
+    FOREIGN KEY (id_buku) REFERENCES buku(id_buku),
+    FOREIGN KEY (id_anggota) REFERENCES anggota(id_anggota)
+);
