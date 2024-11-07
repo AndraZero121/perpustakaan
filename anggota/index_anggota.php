@@ -347,5 +347,12 @@ $result = $koneksi->query($sql);
             });
         }
     </script>
+<<<<<<< HEAD
+
+</body>
+
+</html>
+=======
 </body>
 </html>
+>>>>>>> 82848bd1ffe9451ed763850eaf067c4c3acb1b13
